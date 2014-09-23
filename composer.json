@@ -1,0 +1,13 @@
+{
+	"name": "bettrlife/schmancy-oo",
+	"description": "Fancy schmancy object-oriented utilities.",
+	"license": "BSD-3-Clause",
+	"require": {
+		"php": ">=5.4.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"SchmancyOO\\": "lib/"
+		}
+	}
+}

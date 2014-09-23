@@ -1,0 +1,71 @@
+* SchmancyOO: Fancy-Schmancy OO Utilities
+
+SchmancyOO provides some fancy OO utilities that might make your life easier.
+
+** Class MethodCombinator
+
+A method combinator allows you to provide automatic method combinations.  (A
+method combination is basically just a way of calling all the methods in the
+class hierarchy.)
+
+As an example, imagine you have the following:
+
+#+begin_src php
+class A {
+	function M() { return 1; }
+}
+class B extends A {}
+class C extends B {
+	function M() { return 2; }
+}
+#+end_src
+
+A method combination using the function '+' would invoke C->m(), then invoke
+A->m(), and add the results.  To wit:
+
+#+begin_src php
+(new MethodCombinator(0, function ($x, $y) { $x + $y; }))
+	->invoke('M', new C());
+// => 3
+#+end_src
+
+Contrast that with PHP's "standard" method combination where you would have to
+write something more like:
+
+#+begin_src php
+class A {
+	function M() { return 1; }
+}
+class B extends A {}
+class C extends B {
+	function M() { return 2 + parent::M(); }
+}
+#+end_src
+
+Which isn't terribly onerous in this example, but is really annoying and
+error-prone as the combinator function gets more complicated or you start adding
+in traits-as-mixins.
+
+*** new MethodCombinator($iv, $op, $includeTraits = MethodCombinator::ExcludeTraits)
+
+Creates a new method combinator.  Pass it an initial value, a combinator
+(callback), and (optionally) whether you'd like to include traits in the MRO.
+
+*** Method execute($class, $methodName, $instance = null, $args = [])
+
+Run a method combination against a class instance (or null, for static methods).
+
+*** Method invoke($methodName, $instance, $args = [])
+
+Shorthand for ->execute() where $class is the class of the instance.
+
+** Class C3Linearization
+
+Implements the [[http://en.wikipedia.org/wiki/C3_linearization][C3 Linearization]] algorithm.  While you are unlikely to use this
+directly, it's the underpinnings of other things provided by this library, and
+is useful if you want to build your own utilities.
+
+*** mro(ReflectionClass $class)
+
+Given a class, returns an array of classes and traits defining the order in
+which methods should be tried (the "method resolution order").
