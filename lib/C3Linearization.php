@@ -23,7 +23,6 @@ class C3Linearization {
 	/** Merges several hierarchy sequences into a single, unified sequence. */
 	protected static function merge($seqs) {
 		$res = [];
-		$i = 0;
 		while (count($seqs = array_values(array_filter($seqs, 'count')))) {
 			$cand = null;
 			foreach ($seqs as $seq) {
