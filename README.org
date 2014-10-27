@@ -1,6 +1,11 @@
 * SchmancyOO: Fancy-Schmancy OO Utilities
 
-SchmancyOO provides some fancy OO utilities that might make your life easier.
+SchmancyOO provides some Lisp-inspired OO utilities that might make your life
+easier.
+
+** Installation
+
+: composer install bettrlife/schmancy-oo
 
 ** Class MethodCombinator
 
